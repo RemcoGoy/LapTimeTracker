@@ -1,0 +1,1 @@
+export const useCurrentGame = () => useState<string>('current_game', () => 'acc');

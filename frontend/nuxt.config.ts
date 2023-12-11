@@ -3,7 +3,8 @@ export default defineNuxtConfig({
   css: ['primevue/resources/themes/lara-dark-green/theme.css'],
   devtools: { enabled: true },
   modules: [
-    'nuxt-primevue'
+    'nuxt-primevue',
+    '@nuxtjs/tailwindcss'
   ],
   primevue: {
     components: {
