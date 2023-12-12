@@ -2,5 +2,13 @@
   "editor.tabSize": 2,
   "editor.indentSize": "tabSize",
   "editor.detectIndentation": false,
-  "python.envFile": "${workspaceFolder}/.env"
+  "python.envFile": "${workspaceFolder}/.env",
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "black-formatter.args": [
+    "--line-length",
+    "100"
+  ]
 }
