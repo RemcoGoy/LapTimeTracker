@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -15,8 +15,10 @@ class Session(Id, Base):
     __tablename__ = "sessions"
 
     track_id = Column(UUID(as_uuid=True), ForeignKey("tracks.id"))
+    car_id = Column(UUID(as_uuid=True), ForeignKey("cars.id"))
 
     track = relationship("Track", back_populates="sessions")
+    car = relationship("Car", back_populates="sessions")
     laps = relationship("Lap", back_populates="session")
 
 
@@ -43,3 +45,12 @@ class Track(Id, Base):
 
     game = relationship("Game", back_populates="tracks")
     sessions = relationship("Session", back_populates="track")
+
+
+class Car(Id, Base):
+    __tablename__ = "cars"
+
+    name = Column(String, unique=True)
+    type = Column(String)
+
+    sessions = relationship("Session", back_populates="car")
