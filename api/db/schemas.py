@@ -8,7 +8,7 @@ class IdBase:
 
 
 class LapBase(BaseModel):
-    pass
+    time: float
 
 
 class LapCreate(LapBase):
@@ -29,7 +29,6 @@ class SessionCreate(SessionBase):
 
 
 class Session(IdBase, SessionBase):
-    id: uuid.UUID
     track_id: uuid.UUID
     car_id: uuid.UUID
     laps: list[Lap]
@@ -39,7 +38,8 @@ class Session(IdBase, SessionBase):
 
 
 class TrackBase(BaseModel):
-    pass
+    name: str
+    country: str
 
 
 class TrackCreate(TrackBase):
@@ -69,8 +69,9 @@ class Game(IdBase, GameBase):
 
 
 class CarBase(BaseModel):
-    name: str
-    type: str
+    make: str
+    model: str
+    car_class: str
 
 
 class CarCreate(CarBase):
