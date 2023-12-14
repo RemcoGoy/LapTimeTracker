@@ -1,6 +1,5 @@
 import uuid
 
-from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from . import models, schemas
@@ -150,6 +149,19 @@ def get_tracks(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Track).offset(skip).limit(limit).all()
 
 
+def create_track(db: Session, track: schemas.TrackCreate, game_id: uuid.UUID):
+    db_game = db.get(models.Game, game_id)
+    if db_game is None:
+        return None
+
+    db_track = models.Track(name=track.name, country=track.country, game_id=game_id)
+    db.add(db_track)
+    db.commit()
+    db.refresh(db_track)
+
+    return db_track
+
+
 def update_track(db: Session, track_id: uuid.UUID, update: schemas.TrackUpdate):
     db_track = db.get(models.Track, track_id)
     if db_track is None:
@@ -183,6 +195,19 @@ def get_car(db: Session, car_id: uuid.UUID):
 
 def get_cars(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Car).offset(skip).limit(limit).all()
+
+
+def create_car(db: Session, car: schemas.CarCreate, game_id: uuid.UUID):
+    db_game = db.get(models.Game, game_id)
+    if db_game is None:
+        return None
+
+    db_car = models.Car(make=car.make, model=car.model, car_class=car.car_class, game_id=game_id)
+    db.add(db_car)
+    db.commit()
+    db.refresh(db_car)
+
+    return db_car
 
 
 def update_car(db: Session, car_id: uuid.UUID, update: schemas.CarUpdate):

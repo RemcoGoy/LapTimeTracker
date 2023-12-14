@@ -47,3 +47,25 @@ async def delete_game(game_id: uuid.UUID, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Game not found")
 
     return rows_deleted
+
+
+@router.post("/{game_id}/car", response_model=schemas.Car)
+async def create_car_for_game(
+    game_id: uuid.UUID, car: schemas.CarCreate, db: Session = Depends(get_db)
+):
+    db_car = crud.create_car(db, car, game_id)
+    if db_car is None:
+        raise HTTPException(status_code=404, detail="Game not found")
+
+    return db_car
+
+
+@router.post("/{game_id}/track", response_model=schemas.Track)
+async def create_track_for_game(
+    game_id: uuid.UUID, track: schemas.TrackCreate, db: Session = Depends(get_db)
+):
+    db_track = crud.create_track(db, track, game_id)
+    if db_track is None:
+        raise HTTPException(status_code=404, detail="Game not found")
+
+    return db_track
