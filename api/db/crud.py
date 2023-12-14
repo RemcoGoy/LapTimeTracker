@@ -115,4 +115,20 @@ def create_game(db: Session, game: schemas.GameCreate):
     return db_game
 
 
+def update_game(db: Session, game_id: uuid.UUID, update: schemas.GameUpdate):
+    db_game = db.get(models.Game, game_id)
+    if db_game is None:
+        return db_game
+
+    game_data = update.model_dump(exclude_unset=True)
+    for key, value in game_data.items():
+        setattr(db_game, key, value)
+
+    db.add(db_game)
+    db.commit()
+    db.refresh(db_game)
+
+    return db_game
+
+
 # endregion

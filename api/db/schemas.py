@@ -70,6 +70,10 @@ class GameCreate(GameBase):
     pass
 
 
+class GameUpdate(GameBase):
+    pass
+
+
 class Game(IdBase, GameBase):
     tracks: list[Track]
 

@@ -27,3 +27,14 @@ async def read_game(game_id: uuid.UUID, db: Session = Depends(get_db)):
 @router.post("/", response_model=schemas.Game)
 async def create_game(game: schemas.GameCreate, db: Session = Depends(get_db)):
     return crud.create_game(db, game)
+
+
+@router.patch("/{game_id}", response_model=schemas.Game)
+async def update_game(
+    game_id: uuid.UUID, update: schemas.GameUpdate, db: Session = Depends(get_db)
+):
+    db_game = crud.update_game(db, game_id, update)
+    if db_game is None:
+        raise HTTPException(status_code=404, detail="Game not found")
+
+    return db_game
