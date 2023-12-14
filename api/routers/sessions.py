@@ -1,4 +1,5 @@
 import uuid
+from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -9,19 +10,19 @@ from ..dependencies import get_db
 router = APIRouter(prefix="/sessions", tags=["sessions"])
 
 
-@router.get("/")
+@router.get("/", response_model=List[schemas.Session])
 async def read_sessions(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_sessions(db, skip=skip, limit=limit)
 
 
-@router.get("/{session_id}")
+@router.get("/{session_id}", response_model=schemas.Session)
 async def read_session(session_id: uuid.UUID, db: Session = Depends(get_db)):
     db_session = crud.get_session(db, session_id)
     if db_session is None:
         raise HTTPException(status_code=404, detail="Session not found")
 
 
-@router.post("/")
+@router.post("/", response_model=schemas.Session)
 async def create_session(session: schemas.SessionCreate, db: Session = Depends(get_db)):
     return crud.create_session(db, session)
 

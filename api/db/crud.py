@@ -1,5 +1,6 @@
 import uuid
 
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from . import models, schemas
@@ -35,3 +36,25 @@ def create_lap(db: Session, lap: schemas.LapCreate, session_id: uuid.UUID):
     db.commit()
     db.refresh(db_lap)
     return db_lap
+
+
+def update_lap(db: Session, lap_id: uuid.UUID, update: schemas.LapUpdate):
+    db_lap = db.get(models.Lap, lap_id)
+    if db_lap is None:
+        return db_lap
+
+    lap_data = update.model_dump(exclude_unset=True)
+    for key, value in lap_data.items():
+        setattr(db_lap, key, value)
+
+    db.add(db_lap)
+    db.commit()
+    db.refresh(db_lap)
+
+    return db_lap
+
+
+def delete_lap(db: Session, lap_id: uuid.UUID):
+    result = db.query(models.Lap).filter(models.Lap.id == lap_id).delete()
+    db.commit()
+    return result

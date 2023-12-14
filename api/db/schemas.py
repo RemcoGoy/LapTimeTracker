@@ -16,6 +16,10 @@ class LapCreate(LapBase):
     pass
 
 
+class LapUpdate(LapBase):
+    pass
+
+
 class Lap(IdBase, LapBase):
     class Config:
         orm_mode = True
