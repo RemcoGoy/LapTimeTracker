@@ -55,6 +55,10 @@ class TrackCreate(TrackBase):
     pass
 
 
+class TrackUpdate(TrackBase):
+    pass
+
+
 class Track(IdBase, TrackBase):
     game_id: uuid.UUID
 

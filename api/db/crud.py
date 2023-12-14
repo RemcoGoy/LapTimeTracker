@@ -138,3 +138,38 @@ def delete_game(db: Session, game_id: uuid.UUID):
 
 
 # endregion
+
+# region TRACK
+
+
+def get_track(db: Session, track_id: uuid.UUID):
+    return db.query(models.Track).filter(models.Track.id == track_id).first()
+
+
+def get_tracks(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Track).offset(skip).limit(limit).all()
+
+
+def update_track(db: Session, track_id: uuid.UUID, update: schemas.TrackUpdate):
+    db_track = db.get(models.Track, track_id)
+    if db_track is None:
+        return db_track
+
+    track_data = update.model_dump(exclude_unset=True)
+    for key, value in track_data.items():
+        setattr(db_track, key, value)
+
+    db.add(db_track)
+    db.commit()
+    db.refresh(db_track)
+
+    return db_track
+
+
+def delete_track(db: Session, track_id: uuid.UUID):
+    result = db.query(models.Track).filter(models.Track.id == track_id).delete()
+    db.commit()
+    return result
+
+
+# endregion
