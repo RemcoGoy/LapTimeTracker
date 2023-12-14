@@ -95,6 +95,10 @@ class CarCreate(CarBase):
     pass
 
 
+class CarUpdate(CarBase):
+    pass
+
+
 class Car(IdBase, CarBase):
     class Config:
         orm_mode = True

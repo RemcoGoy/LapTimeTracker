@@ -173,3 +173,38 @@ def delete_track(db: Session, track_id: uuid.UUID):
 
 
 # endregion
+
+# region CAR
+
+
+def get_car(db: Session, car_id: uuid.UUID):
+    return db.query(models.Car).filter(models.Car.id == car_id).first()
+
+
+def get_cars(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Car).offset(skip).limit(limit).all()
+
+
+def update_car(db: Session, car_id: uuid.UUID, update: schemas.CarUpdate):
+    db_car = db.get(models.Car, car_id)
+    if db_car is None:
+        return db_car
+
+    car_data = update.model_dump(exclude_unset=True)
+    for key, value in car_data.items():
+        setattr(db_car, key, value)
+
+    db.add(db_car)
+    db.commit()
+    db.refresh(db_car)
+
+    return db_car
+
+
+def delete_car(db: Session, car_id: uuid.UUID):
+    result = db.query(models.Car).filter(models.Car.id == car_id).delete()
+    db.commit()
+    return result
+
+
+# endregion
