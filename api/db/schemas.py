@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from pydantic import BaseModel
 
@@ -21,7 +22,7 @@ class Lap(IdBase, LapBase):
 
 
 class SessionBase(BaseModel):
-    pass
+    start_time: datetime
 
 
 class SessionCreate(SessionBase):

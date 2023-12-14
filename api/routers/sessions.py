@@ -21,6 +21,11 @@ async def read_session(session_id: uuid.UUID, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Session not found")
 
 
+@router.post("/")
+async def create_session(session: schemas.SessionCreate, db: Session = Depends(get_db)):
+    return crud.create_session(db, session)
+
+
 @router.post("/{session_id}/lap", response_model=schemas.Lap)
 async def create_lap_for_session(
     session_id: uuid.UUID, lap: schemas.LapCreate, db: Session = Depends(get_db)
