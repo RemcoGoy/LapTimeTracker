@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
 
-engine = create_engine(os.getenv("DB_CONNECTION_STRING"))
+engine = create_engine(os.getenv("DB_CONNECTION_STRING") + os.getenv("DB_NAME"))
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
