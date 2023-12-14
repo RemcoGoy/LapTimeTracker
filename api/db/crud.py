@@ -131,4 +131,10 @@ def update_game(db: Session, game_id: uuid.UUID, update: schemas.GameUpdate):
     return db_game
 
 
+def delete_game(db: Session, game_id: uuid.UUID):
+    result = db.query(models.Game).filter(models.Game.id == game_id).delete()
+    db.commit()
+    return result
+
+
 # endregion

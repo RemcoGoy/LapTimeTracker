@@ -40,7 +40,11 @@ async def update_session(
 
 @router.delete("/{session_id}", response_model=int, response_description="Number of deleted rows")
 async def delete_session(session_id: uuid.UUID, db: Session = Depends(get_db)):
-    return crud.delete_session(db, session_id)
+    rows_deleted = crud.delete_session(db, session_id)
+    if rows_deleted == 0:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    return rows_deleted
 
 
 @router.post("/{session_id}/lap", response_model=schemas.Lap)

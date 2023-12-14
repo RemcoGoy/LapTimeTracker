@@ -38,3 +38,12 @@ async def update_game(
         raise HTTPException(status_code=404, detail="Game not found")
 
     return db_game
+
+
+@router.delete("/{game_id}", response_model=int, response_description="Number of deleted rows")
+async def delete_game(game_id: uuid.UUID, db: Session = Depends(get_db)):
+    rows_deleted = crud.delete_game(db, game_id)
+    if rows_deleted == 0:
+        raise HTTPException(status_code=404, detail="Game not found")
+
+    return rows_deleted
