@@ -5,6 +5,8 @@ from sqlalchemy.orm import Session
 
 from . import models, schemas
 
+# region SESSION
+
 
 def get_session(db: Session, session_id: uuid.UUID):
     return db.query(models.Session).filter(models.Session.id == session_id).first()
@@ -42,6 +44,11 @@ def delete_session(db: Session, session_id: uuid.UUID):
     result = db.query(models.Session).filter(models.Session.id == session_id).delete()
     db.commit()
     return result
+
+
+# endregion
+
+# region LAP
 
 
 def get_lap(db: Session, lap_id: uuid.UUID):
@@ -85,3 +92,19 @@ def delete_lap(db: Session, lap_id: uuid.UUID):
     result = db.query(models.Lap).filter(models.Lap.id == lap_id).delete()
     db.commit()
     return result
+
+
+# endregion
+
+# region GAME
+
+
+def get_game(db: Session, game_id: uuid.UUID):
+    return db.query(models.Game).filter(models.Game.id == game_id).first()
+
+
+def get_games(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Game).offset(skip).limit(limit).all()
+
+
+# endregion
