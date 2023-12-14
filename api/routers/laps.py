@@ -17,7 +17,11 @@ async def read_laps(skip: int = 0, limit: int = 100, db: Session = Depends(get_d
 
 @router.get("/{lap_id}", response_model=schemas.Lap)
 async def read_laps(lap_id: uuid.UUID, db: Session = Depends(get_db)):
-    return crud.get_lap(db, lap_id)
+    db_lap = crud.get_lap(db, lap_id)
+    if db_lap is None:
+        raise HTTPException(status_code=404, detail="Lap not found")
+
+    return db_lap
 
 
 @router.patch("/{lap_id}", response_model=schemas.Lap)
@@ -31,4 +35,8 @@ async def update_lap(lap_id: uuid.UUID, update: schemas.LapUpdate, db: Session =
 
 @router.delete("/{lap_id}", response_model=int, response_description="Number of deleted rows")
 async def delete_lap(lap_id: uuid.UUID, db: Session = Depends(get_db)):
-    return crud.delete_lap(db, lap_id)
+    rows_deleted = crud.delete_lap(db, lap_id)
+    if rows_deleted == 0:
+        raise HTTPException(status_code=404, detail="Lap not found")
+
+    return rows_deleted

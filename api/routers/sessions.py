@@ -27,8 +27,28 @@ async def create_session(session: schemas.SessionCreate, db: Session = Depends(g
     return crud.create_session(db, session)
 
 
+@router.patch("/{session_id}", response_model=schemas.Session)
+async def update_session(
+    session_id: uuid.UUID, update: schemas.SessionUpdate, db: Session = Depends(get_db)
+):
+    db_session = crud.update_session(db, session_id, update)
+    if db_session is None:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    return db_session
+
+
+@router.delete("/{session_id}", response_model=int, response_description="Number of deleted rows")
+async def delete_session(session_id: uuid.UUID, db: Session = Depends(get_db)):
+    return crud.delete_session(db, session_id)
+
+
 @router.post("/{session_id}/lap", response_model=schemas.Lap)
 async def create_lap_for_session(
     session_id: uuid.UUID, lap: schemas.LapCreate, db: Session = Depends(get_db)
 ):
-    return crud.create_lap(db, lap, session_id)
+    db_lap = crud.create_lap(db, lap, session_id)
+    if db_lap is None:
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    return db_lap

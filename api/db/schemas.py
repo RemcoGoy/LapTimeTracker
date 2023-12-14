@@ -33,6 +33,10 @@ class SessionCreate(SessionBase):
     pass
 
 
+class SessionUpdate(SessionBase):
+    pass
+
+
 class Session(IdBase, SessionBase):
     track_id: uuid.UUID
     car_id: uuid.UUID
