@@ -28,6 +28,8 @@ class Lap(IdBase, LapBase):
 
 class SessionBase(BaseModel):
     start_time: datetime
+    car_id: uuid.UUID
+    track_id: uuid.UUID
 
 
 class SessionCreate(SessionBase):
@@ -35,12 +37,12 @@ class SessionCreate(SessionBase):
 
 
 class SessionUpdate(SessionBase):
-    pass
+    start_time: Optional[datetime] = None
+    car_id: Optional[uuid.UUID] = None
+    track_id: Optional[uuid.UUID] = None
 
 
 class Session(IdBase, SessionBase):
-    track_id: uuid.UUID
-    car_id: uuid.UUID
     laps: list[Lap]
 
     class ConfigDict:

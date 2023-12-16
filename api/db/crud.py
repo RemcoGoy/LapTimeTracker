@@ -16,7 +16,9 @@ def get_sessions(db: Session, skip: int = 0, limit: int = 100):
 
 
 def create_session(db: Session, session: schemas.SessionCreate):
-    db_session = models.Session()
+    db_session = models.Session(
+        start_time=session.start_time, track_id=session.track_id, car_id=session.car_id
+    )
     db.add(db_session)
     db.commit()
     db.refresh(db_session)

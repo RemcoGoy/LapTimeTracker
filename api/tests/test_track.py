@@ -45,7 +45,9 @@ def test_get_tracks(client):
 
 def test_delete_track(client, session):
     track = crud.create_track(
-        session, schemas.TrackCreate(name="AddTrack", country="UK"), game_id=seeded_games[0]["id"]
+        session,
+        schemas.TrackCreate(name="AddTrack", country="UK"),
+        game_id=seeded_games[0]["id"],
     )
 
     n_tracks_before = len(crud.get_tracks(session))

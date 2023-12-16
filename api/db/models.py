@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, Float, ForeignKey, String
+from sqlalchemy import Column, DateTime, Float, ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -13,6 +13,8 @@ class Id:
 
 class Session(Id, Base):
     __tablename__ = "sessions"
+
+    start_time = Column(DateTime)
 
     track_id = Column(UUID(as_uuid=True), ForeignKey("tracks.id"))
     car_id = Column(UUID(as_uuid=True), ForeignKey("cars.id"))

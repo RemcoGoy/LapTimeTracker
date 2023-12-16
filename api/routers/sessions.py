@@ -21,6 +21,8 @@ async def read_session(session_id: uuid.UUID, db: Session = Depends(get_db)):
     if db_session is None:
         raise HTTPException(status_code=404, detail="Session not found")
 
+    return db_session
+
 
 @router.post("/", response_model=schemas.Session)
 async def create_session(session: schemas.SessionCreate, db: Session = Depends(get_db)):

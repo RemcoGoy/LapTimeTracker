@@ -20,8 +20,8 @@ def test_create_car(client, session):
     assert "id" in data
     car_id = data["id"]
 
-    track = crud.get_car(session, car_id)
-    assert car_id == str(track.id)
+    car = crud.get_car(session, car_id)
+    assert car_id == str(car.id)
 
     deleted = crud.delete_car(session, car_id)
     assert deleted == 1
