@@ -39,3 +39,17 @@ def test_get_games(client):
     assert response.status_code == 200
     data = response.json()
     assert len(data) == n_games
+
+
+def test_delete_game(client, session):
+    game = crud.create_game(session, schemas.GameCreate(name="AddGame"))
+
+    n_games_before = len(crud.get_games(session))
+
+    response = client.delete(f"/games/{game.id}")
+    assert response.status_code == 200
+    assert response.json() == 1
+
+    n_games_after = len(crud.get_games(session))
+
+    assert n_games_before == n_games_after + 1
