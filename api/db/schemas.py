@@ -21,8 +21,8 @@ class LapUpdate(LapBase):
 
 
 class Lap(IdBase, LapBase):
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
 
 
 class SessionBase(BaseModel):
@@ -42,8 +42,8 @@ class Session(IdBase, SessionBase):
     car_id: uuid.UUID
     laps: list[Lap]
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
 
 
 class TrackBase(BaseModel):
@@ -62,8 +62,8 @@ class TrackUpdate(TrackBase):
 class Track(IdBase, TrackBase):
     game_id: uuid.UUID
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
 
 
 class GameBase(BaseModel):
@@ -81,8 +81,8 @@ class GameUpdate(GameBase):
 class Game(IdBase, GameBase):
     tracks: list[Track]
 
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True
 
 
 class CarBase(BaseModel):
@@ -100,5 +100,5 @@ class CarUpdate(CarBase):
 
 
 class Car(IdBase, CarBase):
-    class Config:
-        orm_mode = True
+    class ConfigDict:
+        from_attributes = True

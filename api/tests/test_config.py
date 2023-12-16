@@ -35,8 +35,12 @@ app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
 
 
-@pytest.fixture(scope="module", autouse=True)
-def db_setup():
+@pytest.fixture(scope="session", autouse=True)
+def setup_db():
     Base.metadata.create_all(bind=engine)
     yield
     Base.metadata.drop_all(bind=engine)
+
+
+def test_main():
+    assert 1 == 1
