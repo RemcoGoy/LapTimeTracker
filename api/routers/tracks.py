@@ -16,7 +16,7 @@ async def read_tracks(skip: int = 0, limit: int = 100, db: Session = Depends(get
 
 
 @router.get("/{track_id}", response_model=schemas.Track)
-async def read_track(track_id: int, db: Session = Depends(get_db)):
+async def read_track(track_id: uuid.UUID, db: Session = Depends(get_db)):
     db_track = crud.get_track(db, track_id)
     if db_track is None:
         raise HTTPException(status_code=404, detail="Track not found")

@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -56,7 +57,8 @@ class TrackCreate(TrackBase):
 
 
 class TrackUpdate(TrackBase):
-    pass
+    name: Optional[str] = None
+    country: Optional[str] = None
 
 
 class Track(IdBase, TrackBase):

@@ -11,6 +11,7 @@ from ..db.database import Base
 from ..dependencies import get_db
 from ..main import app
 from .seed.games import seed_games
+from .seed.tracks import seed_tracks
 
 load_dotenv()
 
@@ -31,6 +32,7 @@ def session():
     db = TestingSessionLocal()
 
     seed_games(db)
+    seed_tracks(db)
 
     try:
         yield db
