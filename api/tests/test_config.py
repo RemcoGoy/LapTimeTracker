@@ -10,8 +10,7 @@ from sqlalchemy.pool import StaticPool
 from ..db.database import Base
 from ..dependencies import get_db
 from ..main import app
-from .seed.games import seed_games
-from .seed.tracks import seed_tracks
+from .seed import seed_cars, seed_games, seed_tracks
 
 load_dotenv()
 
@@ -33,6 +32,7 @@ def session():
 
     seed_games(db)
     seed_tracks(db)
+    seed_cars(db)
 
     try:
         yield db

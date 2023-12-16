@@ -37,6 +37,7 @@ class Game(Id, Base):
     name = Column(String, unique=True, index=True, nullable=False)
 
     tracks = relationship("Track", back_populates="game")
+    cars = relationship("Car", back_populates="game")
 
 
 class Track(Id, Base):
@@ -58,4 +59,7 @@ class Car(Id, Base):
     model = Column(String)
     car_class = Column(String)
 
+    game_id = Column(UUID(as_uuid=True), ForeignKey("games.id"))
+
+    game = relationship("Game", back_populates="cars")
     sessions = relationship("Session", back_populates="car")

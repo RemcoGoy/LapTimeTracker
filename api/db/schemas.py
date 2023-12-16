@@ -98,7 +98,9 @@ class CarCreate(CarBase):
 
 
 class CarUpdate(CarBase):
-    pass
+    make: Optional[str] = None
+    model: Optional[str] = None
+    car_class: Optional[str] = None
 
 
 class Car(IdBase, CarBase):

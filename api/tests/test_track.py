@@ -1,6 +1,5 @@
 from ..db import crud, schemas
-from .seed.games import seeded_games
-from .seed.tracks import seeded_tracks
+from .seed import seeded_games, seeded_tracks
 from .test_config import client, session
 
 

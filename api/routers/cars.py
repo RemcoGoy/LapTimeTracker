@@ -16,7 +16,7 @@ async def read_cars(skip: int = 0, limit: int = 100, db: Session = Depends(get_d
 
 
 @router.get("/{car_id}", response_model=schemas.Car)
-async def read_car(car_id: int, db: Session = Depends(get_db)):
+async def read_car(car_id: uuid.UUID, db: Session = Depends(get_db)):
     db_car = crud.get_car(db, car_id)
     if db_car is None:
         raise HTTPException(status_code=404, detail="Car not found")
