@@ -1,14 +1,13 @@
 <template>
-  <PrimeDataTable class="mt-2" :value="games" tableStyle="min-width: 50rem">
-    <template #header>
-      <div class="flex flex-wrap align-items-center justify-content-between gap-2">
-        <span class="text-xl text-900 font-bold">Games</span>
-        <PrimeButton icon="pi pi-refresh" rounded raised />
-      </div>
-    </template>
-
-    <PrimeColumn field="name" header="Name"></PrimeColumn>
-  </PrimeDataTable>
+  <div>
+    <div class="flex justify-between">
+      <div>Hello</div>
+      <PrimeButton class="mt-2 mb-1 p-2" icon="pi pi-plus" label="Add" />
+    </div>
+    <PrimeDataTable class="mt-2" :value="games" tableStyle="min-width: 50rem">
+      <PrimeColumn field="name" header="Name"></PrimeColumn>
+    </PrimeDataTable>
+  </div>
 </template>
 
 <script setup lang="ts">

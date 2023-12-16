@@ -35,12 +35,12 @@ const items = ref([
   },
   {
     label: "Sessions",
-    icon: 'pi pi-sessions',
+    icon: 'pi pi-list',
     route: "/sessions"
   },
   {
     label: "Games",
-    icon: 'pi pi-games',
+    icon: 'pi pi-car',
     route: "/games"
   }
 ]);

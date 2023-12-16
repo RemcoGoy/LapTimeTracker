@@ -1,6 +1,14 @@
+import { resolve } from 'path';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  css: ['primevue/resources/themes/lara-dark-green/theme.css', "@/assets/scss/main.scss", "primeicons/primeicons.css"],
+  css: [
+    "@/assets/scss/tailwind.css",
+    "@/assets/scss/layered.tailwind.css",
+    "@/assets/scss/main.scss",
+    "primeicons/primeicons.css",
+    'primevue/resources/themes/lara-dark-green/theme.css',
+  ],
   devtools: {
     enabled: true,
 
@@ -18,7 +26,12 @@ export default defineNuxtConfig({
     components: {
         include: "*",
         prefix: "Prime"
-    }
+    },
+    options: {
+      unstyled: true
+    },
+    importPT: { as: 'Tailwind', from: 'primevue/passthrough/tailwind' },
+    cssLayerOrder: 'tailwind-base, primevue, tailwind-utilities'
   },
   pinia: {
     storesDirs: ['./stores/**']
