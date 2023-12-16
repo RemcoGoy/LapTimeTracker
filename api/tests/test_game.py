@@ -6,7 +6,7 @@ from .test_config import client, session
 
 
 def test_create_game(client, session):
-    game_name = "TestGame1"
+    game_name = "TestGame2"
 
     response = client.post("/games/", json={"name": game_name})
     assert response.status_code == 200, response.text
@@ -25,8 +25,17 @@ def test_create_game(client, session):
 def test_get_game(client):
     game = seeded_games[0]
 
-    resposne = client.get(f"/games/{game['id']}")
-    assert resposne.status_code == 200
-    data = resposne.json()
+    response = client.get(f"/games/{game['id']}")
+    assert response.status_code == 200
+    data = response.json()
     assert data["name"] == game["name"]
     assert data["id"] == str(game["id"])
+
+
+def test_get_games(client):
+    n_games = len(seeded_games)
+
+    response = client.get("/games")
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data) == n_games

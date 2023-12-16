@@ -2,7 +2,7 @@ import uuid
 
 from ...db.models import Game
 
-seeded_games = [{"id": uuid.UUID("893ace05-dbc5-47d1-8528-122b59ef2c4f"), "name": "TestGame"}]
+seeded_games = [{"id": uuid.uuid4(), "name": "TestGame"}, {"id": uuid.uuid4(), "name": "TestGame1"}]
 
 
 def seed_games(db_session):
