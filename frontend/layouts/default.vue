@@ -14,10 +14,10 @@
           <span v-if="hasSubmenu" class="pi pi-fw pi-angle-down ml-2" />
         </a>
       </template>
-      <template #end>
+      <!-- <template #end>
         <PrimeDropdown v-model="currentGame" :options="games" optionLabel="name" optionValue="key"
           placeholder="Select a Game" class="w-80" />
-      </template>
+      </template> -->
     </PrimeMenubar>
 
     <slot />
@@ -26,14 +26,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { useCurrentGame } from "@/composables/states";
-
-const currentGame = useCurrentGame();
-
-const games = ref([
-  { name: "Assetto Corsa Competizione", key: 'acc' },
-  { name: "Assetto Corsa", key: "ac" }
-])
 
 const items = ref([
   {
@@ -45,6 +37,11 @@ const items = ref([
     label: "Sessions",
     icon: 'pi pi-sessions',
     route: "/sessions"
+  },
+  {
+    label: "Games",
+    icon: 'pi pi-games',
+    route: "/games"
   }
 ]);
 
