@@ -26,7 +26,6 @@ async def read_game(game_id: uuid.UUID, db: Session = Depends(get_db)):
 
 @router.post("/", response_model=schemas.Game)
 async def create_game(game: schemas.GameCreate, db: Session = Depends(get_db)):
-    print("HERE")
     return crud.create_game(db, game)
 
 

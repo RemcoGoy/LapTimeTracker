@@ -10,6 +10,7 @@ from sqlalchemy.pool import StaticPool
 from ..db.database import Base
 from ..dependencies import get_db
 from ..main import app
+from .seed.games import seed_games
 
 load_dotenv()
 
@@ -22,25 +23,30 @@ engine = create_engine(
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-def override_get_db():
+@pytest.fixture(scope="session")
+def session():
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
+
+    db = TestingSessionLocal()
+
+    seed_games(db)
+
     try:
-        db = TestingSessionLocal()
         yield db
     finally:
         db.close()
+        Base.metadata.drop_all(bind=engine)
 
 
-app.dependency_overrides[get_db] = override_get_db
+@pytest.fixture(scope="session")
+def client(session):
+    def override_get_db():
+        try:
+            yield session
+        finally:
+            session.close()
 
-client = TestClient(app)
+    app.dependency_overrides[get_db] = override_get_db
 
-
-@pytest.fixture(scope="session", autouse=True)
-def setup_db():
-    Base.metadata.create_all(bind=engine)
-    yield
-    Base.metadata.drop_all(bind=engine)
-
-
-def test_main():
-    assert 1 == 1
+    yield TestClient(app)
