@@ -1,5 +1,3 @@
-import pytest
-
 from ..db import crud, schemas
 from .seed.games import seeded_games
 from .test_config import client, session
@@ -53,3 +51,18 @@ def test_delete_game(client, session):
     n_games_after = len(crud.get_games(session))
 
     assert n_games_before == n_games_after + 1
+
+
+def test_update_game(client, session):
+    new_name = "UpdatedGame"
+    game = crud.create_game(session, schemas.GameCreate(name="AddGame"))
+
+    response = client.patch(f"/games/{game.id}", json={"name": new_name})
+    assert response.status_code == 200
+    data = response.json()
+
+    game = crud.get_game(session, game.id)
+
+    assert data["name"] == new_name
+    assert data["id"] == str(game.id)
+    assert game.name == new_name
