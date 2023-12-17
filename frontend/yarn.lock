@@ -3674,6 +3674,11 @@ make-fetch-happen@^13.0.0:
     promise-retry "^2.0.1"
     ssri "^10.0.0"
 
+mande@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/mande/-/mande-2.0.8.tgz#1cdfc8062e040ebcf0c199cc4183a8fc22839502"
+  integrity sha512-nqiiaQbswPuHTvkwh8XExhY650qBwSJefyB1+P9Llj8v603aScSrUBmc124fSnVCP+MFZWNBhHKJjsxr7f1tLg==
+
 mdn-data@2.0.28:
   version "2.0.28"
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.28.tgz#5ec48e7bef120654539069e1ae4ddc81ca490eba"

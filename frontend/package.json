@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
+    "mande": "^2.0.8",
     "pinia": "^2.1.7",
     "primeicons": "^6.0.1",
     "primevue": "^3.43.0"

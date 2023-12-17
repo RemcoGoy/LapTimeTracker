@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="flex justify-between">
-      <div>Hello</div>
+    <div class="flex justify-between items-center">
+      <div class="text-xl align-middle">Hello</div>
       <PrimeButton class="mt-2 mb-1 p-2" icon="pi pi-plus" label="Add" />
     </div>
     <PrimeDataTable class="mt-2" :value="games" tableStyle="min-width: 50rem">
